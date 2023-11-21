@@ -7,7 +7,9 @@ def crop_box(image_path):
     src = cv2.imread(image_path)
     dst = src.copy()
     gray = cv2.cvtColor(src, cv2.COLOR_RGB2GRAY)
-    corners = cv2.goodFeaturesToTrack(gray, 100, 0.01, 10, blockSize=3, useHarrisDetector=True, k=0.03)
+    corners = cv2.goodFeaturesToTrack(gray, 100, 0.01, 10, 
+                                      blockSize=3, 
+                                      useHarrisDetector=True, k=0.03)
     corners = corners.astype(int)
     canny = cv2.Canny(src,100,300)
     kernel = np.ones((5,5))
@@ -21,4 +23,5 @@ def crop_box(image_path):
     box = np.where(box<0,0,box)
     cv2.drawContours(dst,[box],-1,(255,0,0),20)
     transform_image = four_point_transform(src, box.reshape(4, 2))
+    transform_image = cv2.fastNlMeansDenoisingColored(transform_image,None,10,10,7,21)
     return src, dst, transform_image

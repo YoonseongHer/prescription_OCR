@@ -3,3 +3,6 @@ data/*
 result/*
 TEST/*
 .ipynb_checkpoints/*
+OpenCV_FormOCR/
+tools/.ipynb_checkpoints/*
+tools/__pycache__/*
